@@ -11,8 +11,10 @@ server.listen();
 server.on('listening', function () {
     log.info(`IRIS-Time is listening on ${server.address().port} in ${service.get('env')} mode.`);
 
+    const irisUrl = !process.env.IRIS_URL ? 'http://127.0.0.1:3000' : process.env.IRIS_URL;
+
     const announce = () => {
-        request.put(`http://127.0.0.1:3000/service/time/${server.address().port}`)
+        request.put(`${irisUrl}/service/time/${server.address().port}`)
             .set('X-IRIS-SERVICE-TOKEN', config.serviceAccessToken)
             .set('X-IRIS-API-TOKEN', config.irisApiToken)
             .end((err) => {
