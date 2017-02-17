@@ -11,7 +11,7 @@ server.listen();
 server.on('listening', function () {
     log.info(`IRIS-Time is listening on ${server.address().port} in ${service.get('env')} mode.`);
 
-    const irisUrl = !process.env.IRIS_URL ? 'http://127.0.0.1:3000' : process.env.IRIS_URL;
+    const irisUrl = process.env.IRIS_URL ? process.env.IRIS_URL : 'http://127.0.0.1:3000';
 
     const announce = () => {
         request.put(`${irisUrl}/service/time/${server.address().port}`)
